@@ -9,6 +9,7 @@ const cors         = require('cors');
 
 const indexRouter  = require('./routes/index');
 const orderRouter  = require('./routes/orderRouter');
+const fileRouter   = require('./routes/fileRouter');
 
 const app          = express();
 const CONFIG       = require('./config/config');
@@ -25,6 +26,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+app.use('/fileupload', fileRouter);
 app.use('/orders', orderRouter);
 
 // catch 404 and forward to error handler
