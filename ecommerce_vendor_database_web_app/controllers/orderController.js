@@ -5,13 +5,13 @@ const db = require('../models/dbConnection');
 const orderController = {
 
   insertOne : (line) => {
-    console.log('order record: ' + line);
+    // console.log('order record: ' + line);
     const attributes = line.split('\t');
     const dateAndTime = attributes[10].slice(0, 16).replace('T', ' ');
-    console.log('dateAndTime: ' + dateAndTime);
-    for (i = 0; i < attributes.length; i++) {
-      console.log('attribute ' + i + ': ' + attributes[i]);
-    }
+    // console.log('dateAndTime: ' + dateAndTime);
+    // for (i = 0; i < attributes.length; i++) {
+    //   console.log('attribute ' + i + ': ' + attributes[i]);
+    // }
     const sql = "INSERT INTO ORDERS (order_id, customer_id, customer_first_name, customer_last_name, \
       customer_street_address, customer_state, customer_zip, purchase_status, product_id, product_name, \
       purchase_amount, purchase_timestamp) VALUES (NULL, \"" + 
@@ -29,7 +29,7 @@ const orderController = {
     const result = db.query(sql);
     let resultJson = JSON.stringify(result);
     resultJson = JSON.parse(resultJson);
-    console.log(resultJson);
+    // console.log(resultJson);
     console.log('\ninserted 1 record\n---');
   },
 

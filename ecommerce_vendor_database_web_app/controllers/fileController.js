@@ -22,7 +22,7 @@ fileController.saveFile = (req, res) => {
     const newpath = path.join(__dirname, '../files/' + files.filetoupload.name);
     console.log('newpath: ' + newpath);
     fs.renameSync(oldpath, newpath);
-    res.write('File uploaded and moved!');
+    res.write('File uploaded!');
     res.end();
     console.log('Finished saving file\n=============\n');
     fileController.parseFile(newpath);
