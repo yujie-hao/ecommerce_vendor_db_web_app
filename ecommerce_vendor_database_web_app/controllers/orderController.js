@@ -6,15 +6,25 @@ const orderController = {
 
   insertOne : (line) => {
     console.log('order record: ' + line);
+    const attributes = line.split('\t');
+    const dateAndTime = attributes[10].slice(0, 16).replace('T', ' ');
+    console.log('dateAndTime: ' + dateAndTime);
+    for (i = 0; i < attributes.length; i++) {
+      console.log('attribute ' + i + ': ' + attributes[i]);
+    }
     const sql = "INSERT INTO ORDERS (order_id, customer_id, customer_first_name, customer_last_name, \
       customer_street_address, customer_state, customer_zip, purchase_status, product_id, product_name, \
-      purchase_amount, purchase_timestamp) \
-      VALUES (NULL, '1', 'Snake', 'Plisken', 'Fake St.', 'AZ', '12345', 'new', '432', 'Masthead', 100.12, '2007-04-05 14:30:00');";
-    db.query(sql, (err, result) => {
+      purchase_amount, purchase_timestamp) VALUES ?";
+    const values = [
+      [0, attributes[0], attributes[1], attributes[2], attributes[3], attributes[4], attributes[5], 
+      attributes[6], attributes[7], attributes[8], attributes[9], dateAndTime],
+    ];
+
+    db.query(sql, [values], (err, result) => {
       if (err) {
         console.log(err);
       } else {
-        console.log('1 record inserted: ' + result);
+        console.log('1 record inserted: ' + result.affectedRows);
       }
     });
   },
