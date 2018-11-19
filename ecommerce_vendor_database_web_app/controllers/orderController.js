@@ -3,6 +3,22 @@
 const db = require('../models/dbConnection');
 
 const orderController = {
+
+  insertOne : (line) => {
+    console.log('order record: ' + line);
+    const sql = "INSERT INTO ORDERS (order_id, customer_id, customer_first_name, customer_last_name, \
+      customer_street_address, customer_state, customer_zip, purchase_status, product_id, product_name, \
+      purchase_amount, purchase_timestamp) \
+      VALUES (NULL, '1', 'Snake', 'Plisken', 'Fake St.', 'AZ', '12345', 'new', '432', 'Masthead', 100.12, '2007-04-05 14:30:00');";
+    db.query(sql, (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log('1 record inserted: ' + result);
+      }
+    });
+  },
+
   getAllOrders : (req, res) => {
     let pathname = req._parsedUrl.pathname.split('/');
     let section = pathname[1];

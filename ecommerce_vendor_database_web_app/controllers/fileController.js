@@ -1,16 +1,16 @@
 /*jshint esversion: 6 */
 
-const formidable = require('formidable');
-const fs         = require('fs');
-const path       = require('path');
+const formidable      = require('formidable');
+const fs              = require('fs');
+const path            = require('path');
+const orderController = require('./orderController');
 
 const fileController = {};
 
 fileController.parseFile = (filePath) => {
   console.log('Parsing file: ' + filePath);
-  let i = 1;
   fs.readFileSync(filePath).toString().split('\n').forEach((line) => {
-    console.log('line#' + i++ + ': ' + line);
+    orderController.insertOne(line);
   });
 };
 
