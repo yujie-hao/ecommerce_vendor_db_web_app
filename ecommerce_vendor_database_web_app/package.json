@@ -20,7 +20,8 @@
     "mysql": "^2.16.0",
     "path": "^0.12.7",
     "pug": "2.0.0-beta11",
-    "sequelize": "^4.41.2"
+    "sequelize": "^4.41.2",
+    "sync-mysql": "^3.0.1"
   },
   "devDependencies": {
     "nodemon": "^1.18.6"

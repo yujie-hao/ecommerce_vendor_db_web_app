@@ -14,19 +14,23 @@ const orderController = {
     }
     const sql = "INSERT INTO ORDERS (order_id, customer_id, customer_first_name, customer_last_name, \
       customer_street_address, customer_state, customer_zip, purchase_status, product_id, product_name, \
-      purchase_amount, purchase_timestamp) VALUES ?";
-    const values = [
-      [0, attributes[0], attributes[1], attributes[2], attributes[3], attributes[4], attributes[5], 
-      attributes[6], attributes[7], attributes[8], attributes[9], dateAndTime],
-    ];
-
-    db.query(sql, [values], (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log('1 record inserted: ' + result.affectedRows);
-      }
-    });
+      purchase_amount, purchase_timestamp) VALUES (NULL, \"" + 
+      attributes[0] + "\", \"" + 
+      attributes[1] + "\", \"" + 
+      attributes[2] + "\", \"" + 
+      attributes[3] + "\", \"" + 
+      attributes[4] + "\", \"" + 
+      attributes[5] + "\", \"" + 
+      attributes[6] + "\", \"" + 
+      attributes[7] + "\", \"" + 
+      attributes[8] + "\", \"" + 
+      attributes[9] + "\", \"" + 
+      dateAndTime   + "\");";
+    const result = db.query(sql);
+    let resultJson = JSON.stringify(result);
+    resultJson = JSON.parse(resultJson);
+    console.log(resultJson);
+    console.log('\ninserted 1 record\n---');
   },
 
   getAllOrders : (req, res) => {
@@ -34,37 +38,21 @@ const orderController = {
     let section = pathname[1];
 
     //query the DB using prepared statement
-    db.query('SELECT * FROM ORDERS', [section], (error, results, fields) => {
-      let apiResult = {};
-      if (error) {
-        console.log(error);        
-        apiResult.meta = {
-          table : section,
-          type  : "collection",
-          total : 0
-        };
+    const result = db.query('SELECT * FROM ORDERS');
+    //make results
+    let resultJson = JSON.stringify(result);
+    resultJson = JSON.parse(resultJson);
+    apiResult = {};
+    apiResult.meta = {
+      table         : section,
+      type          : "collection",
+      total         : 1,
+      total_entries : 0
+    };
 
-        //create an empty data table
-        apiResult.data = [];
-        //send the results (apiResult) as JSON to Express res --> Express uses res.json to send JSON to client
-        res.json(apiResult);
-      }
-
-      //make results
-      let resultJson = JSON.stringify(results);
-      resultJson = JSON.parse(resultJson);
-      apiResult = {};
-      apiResult.meta = {
-        table         : section,
-        type          : "collection",
-        total         : 1,
-        total_entries : 0
-      };
-
-      apiResult.data = resultJson;
-      //send JSON to Express
-      res.json(apiResult);
-    });
+    apiResult.data = resultJson;
+    //send JSON to Express
+    res.json(apiResult);
   }
 };
 module.exports = orderController;

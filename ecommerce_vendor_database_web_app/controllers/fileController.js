@@ -24,7 +24,7 @@ fileController.saveFile = (req, res) => {
     fs.renameSync(oldpath, newpath);
     res.write('File uploaded and moved!');
     res.end();
-    console.log('Finished saving file');
+    console.log('Finished saving file\n=============\n');
     fileController.parseFile(newpath);
   });
 };
